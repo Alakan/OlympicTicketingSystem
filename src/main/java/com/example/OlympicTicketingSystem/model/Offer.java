@@ -4,30 +4,25 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.List;
-
-@Entity // Indique que cette classe est une entité JPA.
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "offer")
 public class Offer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // La clé primaire sera générée automatiquement.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull // Assure que le type de l'offre (ex: solo, duo, famille) ne peut pas être nul.
-    private String type;
-
-    @NotNull // Assure que la description de l'offre ne peut pas être nulle.
+    @NotNull
     private String description;
 
-    @NotNull // Assure que le prix de l'offre ne peut pas être nul.
-    private Double price;
+    @NotNull
+    private double price;
 
-    // Relation avec l'entité Reservation. Une offre peut avoir plusieurs réservations.
-    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reservation> reservations;
+    @NotNull
+    private String type;
 }

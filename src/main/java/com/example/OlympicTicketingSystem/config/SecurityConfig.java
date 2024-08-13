@@ -27,6 +27,20 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()); // Désactiver la protection CSRF temporairement
 
         return http.build();
+        /*
+        http
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/api/admin/**").hasRole("SUPER_ADMIN")
+                .requestMatchers("/api/users/**").hasAnyRole("SUPER_ADMIN", "USER_MANAGER")
+                .requestMatchers("/api/reservations/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .anyRequest().authenticated()
+            )
+            .formLogin(withDefaults())
+            .httpBasic(withDefaults())
+            .csrf(csrf -> csrf.disable());
+
+        return http.build();
+         */
     }
 
     @Bean
@@ -38,11 +52,11 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(user);
     }
-
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
 
